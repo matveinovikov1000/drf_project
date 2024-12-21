@@ -1,15 +1,20 @@
 from rest_framework import generics, viewsets
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
-from materials.models import Course, Lesson
+from materials.models import Course, Lesson, Subscription
 from materials.serializers import (CourseDetailModelSerializer,
-                                   LessonModelSerializer)
+                                   LessonModelSerializer,
+                                   SubscriptionModelSerializer)
 from users.permissions import IsModerators, IsOwner
+from materials.paginators import CustomPagination
 
 
 class CourseModelViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseDetailModelSerializer
+    pagination_class = CustomPagination
 
     def perform_create(self, serializer):
         course = serializer.save()
@@ -43,6 +48,7 @@ class LessonListAPIView(generics.ListAPIView):
         IsAuthenticated,
         IsModerators | IsOwner,
     )
+    pagination_class = CustomPagination
 
 
 class LessonCreateAPIView(generics.CreateAPIView):
@@ -75,3 +81,20 @@ class LessonDestroyAPIView(generics.DestroyAPIView):
         IsAuthenticated,
         ~IsModerators | IsOwner,
     )
+
+
+class SubscriptionCreateAPIView(generics.CreateAPIView):
+    serializer_class = SubscriptionModelSerializer
+
+    def post(self, *args, **kwargs):
+        user = self.request.user
+        course_id = self.request.data.get("courses")
+        course_item = get_object_or_404(Course, pk=course_id)
+
+        if Subscription.objects.filter(owner=user, courses=course_item).exists():
+            Subscription.objects.get(owner=user, courses=course_item).delete()
+            message = "Подписка удалена"
+        elif not Subscription.objects.filter(owner=user, courses=course_item).exists():
+            Subscription.objects.create(owner=user, courses=course_item, is_subs=True)
+            message = "Подписка добавлена"
+        return Response({"message": message})
