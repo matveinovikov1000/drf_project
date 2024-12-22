@@ -1,24 +1,24 @@
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, generics, viewsets
+from rest_framework import generics
 from rest_framework.permissions import AllowAny
 
 from users.models import Payments, User
 from users.serializers import PaymentsModelSerializer, UserSerializer
+from users.services import create_stripe_product, create_stripe_price, create_stripe_session
 
 
-class PaymentsModelViewSet(viewsets.ModelViewSet):
+class PaymentsCreateAPIView(generics.CreateAPIView):
     queryset = Payments.objects.all()
     serializer_class = PaymentsModelSerializer
 
-    filter_backends = [
-        DjangoFilterBackend,
-        filters.OrderingFilter,
-    ]
-    filterset_fields = (
-        "paid_course",
-        "payment_method",
-    )
-    ordering_fields = ("payment_date",)
+    def perform_create(self, serializer):
+        payment = serializer.save(owner=self.request.user)
+        product = create_stripe_product(payment)
+        price = create_stripe_price(payment.payment_amount, product)
+        session_id, payment_link = create_stripe_session(price)
+        payment.session_id = session_id
+        payment.link = payment_link
+        payment.owner = self.request.user
+        payment.save()
 
 
 class UserCreateAPIView(generics.CreateAPIView):
