@@ -14,7 +14,7 @@ class LessonModelSerializer(serializers.ModelSerializer):
 
 class CourseDetailModelSerializer(serializers.ModelSerializer):
     len_lessons_with_some_course = serializers.SerializerMethodField()
-    lessons = LessonModelSerializer(many=True)
+    lessons = LessonModelSerializer(many=True, read_only=True)
     is_subs = serializers.SerializerMethodField()
 
     def get_len_lessons_with_some_course(self, obj):
