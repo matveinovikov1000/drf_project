@@ -9,6 +9,7 @@ from materials.serializers import (CourseDetailModelSerializer,
                                    SubscriptionModelSerializer)
 from users.permissions import IsModerators, IsOwner
 from materials.paginators import CustomPagination
+from materials.tasks import add_mail
 
 
 class CourseModelViewSet(viewsets.ModelViewSet):
@@ -21,6 +22,10 @@ class CourseModelViewSet(viewsets.ModelViewSet):
         course.owner = self.request.user
         course.save()
 
+    def perform_update(self, serializer):
+        course = serializer.save()
+        add_mail.delay(course_id=course.id)
+
     def get_permissions(self):
         if self.action in "create":
             self.permission_classes = (~IsModerators,)
@@ -28,7 +33,6 @@ class CourseModelViewSet(viewsets.ModelViewSet):
             self.permission_classes = (IsModerators | IsOwner,)
         elif self.action == "destroy":
             self.permission_classes = (~IsModerators | IsOwner,)
-
         return super().get_permissions()
 
 
