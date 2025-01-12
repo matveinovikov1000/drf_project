@@ -1,0 +1,35 @@
+[
+  {
+    "model": "users.payments",
+    "pk": 1,
+    "fields": {
+      "owner": 1,
+      "paid_course": 2,
+      "payment_date": "2024-12-09",
+      "payment_amount": "70000.00",
+      "payment_method": "Наличные"
+    }
+  },
+  {
+    "model": "users.payments",
+    "pk": 2,
+    "fields": {
+      "owner": 1,
+      "paid_course": 4,
+      "payment_date": "2024-12-09",
+      "payment_amount": "80000.00",
+      "payment_method": "Наличные"
+    }
+  },
+  {
+    "model": "users.payments",
+    "pk": 3,
+    "fields": {
+      "owner": 1,
+      "paid_course": null,
+      "payment_date": "2024-12-09",
+      "payment_amount": "10000.00",
+      "payment_method": "Наличные"
+    }
+  }
+]
