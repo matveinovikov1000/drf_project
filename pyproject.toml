@@ -5,22 +5,24 @@ description = ""
 authors = ["Матвей Новиков <originsik@gmail.com>"]
 readme = "README.md"
 
-packages = [
-    {include = "python"},
-    {include = "django"},
-    {include = "djangorestframework"},
-    {include = "python-dotenv"},
-    {include = "pillow"},
-    {include = "django-filter"},
-    {include = "djangorestframework-simplejwt"},
-    {include = "drf-yasg"},
-    {include = "stripe"},
-    {include = "celery"},
-    {include = "redis"},
-    {include = "eventlet"},
-    {include = "django-celery-beat"},
-    {include = "gunicorn"},
-]
+package-mode = false
+
+#packages = [
+#    {include = "python"},
+#    {include = "django"},
+#    {include = "djangorestframework"},
+#    {include = "python-dotenv"},
+#    {include = "pillow"},
+#    {include = "django-filter"},
+#    {include = "djangorestframework-simplejwt"},
+#    {include = "drf-yasg"},
+#    {include = "stripe"},
+#    {include = "celery"},
+#    {include = "redis"},
+#    {include = "eventlet"},
+#    {include = "django-celery-beat"},
+#    {include = "gunicorn"},
+#]
 
 [tool.poetry.dependencies]
 python = "^3.12"
