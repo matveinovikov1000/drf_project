@@ -5,7 +5,11 @@ description = ""
 authors = ["Матвей Новиков <originsik@gmail.com>"]
 readme = "README.md"
 
-package-mode = false
+packages = [
+    {include = "config"},
+    {include = "materials"},
+    {include = "users"}
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"

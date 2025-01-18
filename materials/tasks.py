@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from timezone_field.backends import pytz
+import pytz
 
 from config import settings
 from django.core.mail import send_mail
