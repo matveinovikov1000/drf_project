@@ -103,6 +103,5 @@ class LessonTestCase(APITestCase):
             "courses": self.course,
             "owner": self.user
         }
-        response = self.client.post(url, data)
-        temp_data = response.json()
+        self.client.post(url, data)
         self.assertEqual(Subscription.objects.all().count(), 1)
