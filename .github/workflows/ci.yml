@@ -89,7 +89,7 @@ jobs:
         run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/materials:${{ github.sha }} .
 
       - name: Push Docker image in DockerHub
-        run: docker push -t ${{ secrets.DOCKER_HUB_USERNAME }}/materials:${{ github.sha }}
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/materials:${{ github.sha }}
 
   deploy:
     needs: build
