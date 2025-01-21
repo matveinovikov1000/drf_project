@@ -5,7 +5,9 @@ from materials.validators import validate_link_video_lesson
 
 
 class LessonModelSerializer(serializers.ModelSerializer):
-    link_video = serializers.CharField(validators=[validate_link_video_lesson], read_only=True)
+    link_video = serializers.CharField(
+        validators=[validate_link_video_lesson], read_only=True
+    )
 
     class Meta:
         model = Lesson

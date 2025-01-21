@@ -94,18 +94,30 @@ class Course(models.Model):
 
 
 class Subscription(models.Model):
-    courses = models.ForeignKey(Course, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Курсы", help_text="Укажите курсы", related_name="subscriptions")
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Владелец",
-                                help_text="Укажите владельца", related_name="subscriptions")
+    courses = models.ForeignKey(
+        Course,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name="Курсы",
+        help_text="Укажите курсы",
+        related_name="subscriptions",
+    )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name="Владелец",
+        help_text="Укажите владельца",
+        related_name="subscriptions",
+    )
     is_subs = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Подписка"
         verbose_name_plural = "Подписки"
-        ordering = [
-            "courses",
-            "owner"
-        ]
+        ordering = ["courses", "owner"]
 
     def __str__(self):
         return f"{self.owner} {self.courses}"

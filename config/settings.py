@@ -106,6 +106,8 @@ STATIC_URL = "static/"
 
 STATICFILES_DIRS = (BASE_DIR / "static",)
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = "/media/"
@@ -142,8 +144,8 @@ SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 CELERY_BEAT_SCHEDULE = {
-    'task-name': {
-        'task': 'materials.tasks.check_activity',
-        'schedule': timedelta(minutes=10),
+    "task-name": {
+        "task": "materials.tasks.check_activity",
+        "schedule": timedelta(minutes=10),
     },
 }

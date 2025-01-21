@@ -4,9 +4,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from materials.models import Course, Lesson, Subscription
-from materials.serializers import (CourseDetailModelSerializer,
-                                   LessonModelSerializer,
-                                   SubscriptionModelSerializer)
+from materials.serializers import (
+    CourseDetailModelSerializer,
+    LessonModelSerializer,
+    SubscriptionModelSerializer,
+)
 from users.permissions import IsModerators, IsOwner
 from materials.paginators import CustomPagination
 from materials.tasks import add_mail
